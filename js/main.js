@@ -8,7 +8,7 @@ const ctx = canvas.getContext('2d')
 export default class Main {
   constructor() {
     let image = new Image();
-    image.src = 'images/bg.jpg';
+    image.src = 'images/background.png';
     image.onload = ()=>{
       ctx.drawImage(image,
         0, 0, 
@@ -17,5 +17,4 @@ export default class Main {
         image.width, image.height);
     }
   }
-
 }
