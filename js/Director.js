@@ -12,6 +12,7 @@ export class Director {
     }
 
     constructor() {
+        console.log("创建全局Director对象");
         this.dataStore = DataStore.getInstance();
     }
 
@@ -20,6 +21,7 @@ export class Director {
         // console.log("DataStore: ", this.dataStore);
         // console.log("Background: ", this.dataStore.get('background'));
         // 找到背景精灵对象并执行绘制
+        console.log("Director.run(): 执行核心逻辑");
         this.dataStore.get('background').draw();
     }
 }

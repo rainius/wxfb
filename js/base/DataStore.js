@@ -10,8 +10,8 @@ export class DataStore {
     }
 
     constructor() {
+        console.log("创建全局DataStore对象");
         this.map = new Map();
-        console.log("Build the DataStore");
     }
 
     put(key, value) {   //存储变量

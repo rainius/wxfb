@@ -3,7 +3,6 @@ import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
 import { Background } from "./runtime/Background";
 
-
 const ctx = canvas.getContext('2d')
 
 /**
@@ -11,6 +10,7 @@ const ctx = canvas.getContext('2d')
  */
 export default class Main {
     constructor() {
+        console.log("创建Main对象");
   //   let image = new Image();
   //   image.src = 'images/background.png';
   //   image.onload = ()=>{
@@ -35,6 +35,7 @@ export default class Main {
         //对DataStore进行测试
         //DataStore.getInstance();
         // 第一次完成加载时讲canvas、context、map对象存入DataStore
+        console.log("Main.onResourceFirstLoad(): 填充DataStore[画布、上下文、图片资源]");
         this.dataStore = DataStore.getInstance();
         this.dataStore.canvas = canvas;
         this.dataStore.ctx = ctx;
@@ -44,6 +45,7 @@ export default class Main {
 
     init() {  
         //将每个精灵放入DataStore中
+        console.log("Main.init(): 添加背景Sprite对象到DataStore");
         this.dataStore.put('background', Background);
         this.director.run();
     }
