@@ -18,6 +18,14 @@ export default class Main {
   //       image.width, image.height);
   //   }
     //初始化资源加载类
-        new ResourceLoader();
+        // new ResourceLoader();
+        //使用工厂方法创建loader
+        const loader = ResourceLoader.create();
+        loader.onload(map => this.onResourceFirstLoad(map));
+      
+    }
+
+    onResourceFirstLoad(map) {
+          console.log(map);
     }
 }

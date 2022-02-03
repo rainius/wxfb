@@ -6,12 +6,12 @@ export class ResourceLoader {
         //资源描述全部装到map里以便根据名字来访问
         this.map = new Map(Resources);
         for (let [key, value] of this.map) {
-            console.log(key, value);
+            // console.log(key, value);
             const image = new Image();
             image.src = value;  //导入的Resource中的路径
             this.map.set(key, image);
         }
-        console.log(this.map);
+        // console.log(this.map);
     }
 
     //注入回调函数
@@ -30,6 +30,6 @@ export class ResourceLoader {
 
     //工厂方法
     static create() {
-
+        return new ResourceLoader();
     }
 }
