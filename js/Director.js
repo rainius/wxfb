@@ -23,5 +23,6 @@ export class Director {
         // 找到背景精灵对象并执行绘制
         console.log("Director.run(): 执行核心逻辑");
         this.dataStore.get('background').draw();
+        this.dataStore.get('land').draw();
     }
 }

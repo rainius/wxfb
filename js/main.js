@@ -1,6 +1,7 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
+import { Land } from "./player/Land";
 import { Background } from "./runtime/Background";
 
 const ctx = canvas.getContext('2d')
@@ -46,7 +47,7 @@ export default class Main {
     init() {  
         //将每个精灵放入DataStore中
         console.log("Main.init(): 添加背景Sprite对象到DataStore");
-        this.dataStore.put('background', Background);
+        this.dataStore.put('background', Background).put('land', Land);
         this.director.run();
     }
 }
