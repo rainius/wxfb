@@ -20,6 +20,8 @@ export default class Main {
   //   }
     //初始化资源加载类
         // new ResourceLoader();
+        this.dataStore = DataStore.getInstance();
+
         //使用工厂方法创建loader
         const loader = ResourceLoader.create();
         loader.onload(map => this.onResourceFirstLoad(map));
@@ -28,6 +30,16 @@ export default class Main {
 
     onResourceFirstLoad(map) {
         //对DataStore进行测试
-        DataStore.getInstance();
+        //DataStore.getInstance();
+        // 第一次完成加载时讲canvas、context、map对象存入DataStore
+        this.dataStore = DataStore.getInstance();
+        this.dataStore.canvas = canvas;
+        this.dataStore.res = map; //图片资源
+        this.init();
+    }
+
+    init() {  
+      //将每个精灵放入DataStore中
+
     }
 }
