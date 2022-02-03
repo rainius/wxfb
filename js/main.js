@@ -21,11 +21,9 @@ export default class Main {
     //初始化资源加载类
         // new ResourceLoader();
         this.dataStore = DataStore.getInstance();
-
         //使用工厂方法创建loader
         const loader = ResourceLoader.create();
         loader.onload(map => this.onResourceFirstLoad(map));
-      
     }
 
     onResourceFirstLoad(map) {
@@ -34,6 +32,7 @@ export default class Main {
         // 第一次完成加载时讲canvas、context、map对象存入DataStore
         this.dataStore = DataStore.getInstance();
         this.dataStore.canvas = canvas;
+        this.dataStore.ctx = ctx;
         this.dataStore.res = map; //图片资源
         this.init();
     }
