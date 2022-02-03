@@ -14,6 +14,8 @@ export class Director {
     constructor() {
         console.log("创建全局Director对象");
         this.dataStore = DataStore.getInstance();
+        //定义飞行速度
+        this.moveSpeed = 2;
     }
 
     // 游戏核心逻辑
@@ -24,5 +26,7 @@ export class Director {
         console.log("Director.run(): 执行核心逻辑");
         this.dataStore.get('background').draw();
         this.dataStore.get('land').draw();
+        let timer = requestAnimationFrame(() => this.run());
+        this.dataStore.put('timer', timer);
     }
 }
