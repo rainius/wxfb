@@ -31,4 +31,8 @@ export class Sprite {
     ) {
         this.ctx.draw(img, srcX, srcY, srcW, srcH, x, y, width, height);
     }
+
+    static getImage(name) {
+        return DataStore.getInstance().res.get(name);
+    }
 }
