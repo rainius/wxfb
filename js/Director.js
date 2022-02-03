@@ -17,7 +17,9 @@ export class Director {
 
     // 游戏核心逻辑
     run() {
-        //找到背景精灵对象并执行绘制
+        // console.log("DataStore: ", this.dataStore);
+        // console.log("Background: ", this.dataStore.get('background'));
+        // 找到背景精灵对象并执行绘制
         this.dataStore.get('background').draw();
     }
 }

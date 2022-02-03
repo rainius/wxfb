@@ -1,5 +1,7 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
+import { Director } from "./Director";
+import { Background } from "./runtime/Background";
 
 
 const ctx = canvas.getContext('2d')
@@ -20,7 +22,10 @@ export default class Main {
   //   }
     //初始化资源加载类
         // new ResourceLoader();
+        //初始化数据存储类
         this.dataStore = DataStore.getInstance();
+        //初始化导演
+        this.director = Director.getInstance();
         //使用工厂方法创建loader
         const loader = ResourceLoader.create();
         loader.onload(map => this.onResourceFirstLoad(map));
@@ -38,7 +43,8 @@ export default class Main {
     }
 
     init() {  
-      //将每个精灵放入DataStore中
-
+        //将每个精灵放入DataStore中
+        this.dataStore.put('background', Background);
+        this.director.run();
     }
 }

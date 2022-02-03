@@ -5,7 +5,7 @@ import { DataStore } from "./DataStore";
 export class Sprite {
     constructor(
         img=null,
-        src=0, srcY=0,
+        srcX=0, srcY=0,
         srcW=0, srcH=0,
         x=0, y=0,
         width=0, height=0) {
@@ -29,7 +29,8 @@ export class Sprite {
         x = this.x, y = this.y,
         width = this.width, height = this.height
     ) {
-        this.ctx.draw(img, srcX, srcY, srcW, srcH, x, y, width, height);
+        // console.log("draw image: " + img);
+        this.ctx.drawImage(img, srcX, srcY, srcW, srcH, x, y, width, height);
     }
 
     static getImage(name) {
