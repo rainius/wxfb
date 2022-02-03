@@ -1,3 +1,4 @@
+import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 
 
@@ -26,6 +27,7 @@ export default class Main {
     }
 
     onResourceFirstLoad(map) {
-          console.log(map);
+        //对DataStore进行测试
+        DataStore.getInstance();
     }
 }
