@@ -45,6 +45,8 @@ export default class Main {
     }
 
     init() {  
+        //将游戏结束标记设置为false，游戏可以开始
+        this.director.isGameOver = false;
         //将每个精灵放入DataStore中
         console.log("Main.init(): 添加背景Sprite对象到DataStore");
         this.dataStore.put('background', Background)
