@@ -47,7 +47,12 @@ export default class Main {
     init() {  
         //将每个精灵放入DataStore中
         console.log("Main.init(): 添加背景Sprite对象到DataStore");
-        this.dataStore.put('background', Background).put('land', Land);
+        this.dataStore.put('background', Background)
+                .put('land', Land)
+                .put('pipes', []);  // 2个管道同时出现
+
+        // 生成管道对
+        this.director.createPipes();
         this.director.run();
     }
 }

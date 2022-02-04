@@ -1,11 +1,10 @@
 //上面的水管
-
-import { Sprite } from "../base/Sprite";
 import { Pipe } from "./Pipe";
+import { Sprite } from "../base/Sprite";
 
 export class UpPipe extends Pipe {
     constructor(top) {
-        const image = Sprite.getImage('pipeUp');
+        const image = Sprite.getImage('pipe_up');
         super(image, top)
     }
 
