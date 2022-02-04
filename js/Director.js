@@ -39,10 +39,16 @@ export class Director {
         // 找到背景精灵对象并执行绘制
         console.log("Director.run(): 执行核心逻辑");
         this.dataStore.get('background').draw();
-        this.dataStore.get('land').draw();
+        
+        const pipes = this.dataStore.get('pipes');
+
+        //水管离开屏幕后清除掉
+        if (pipes[0].x + pipes[0 ].width <= 0 && pipes.length == 4) {
+            pipes.shift();
+            pipes.shift();    
+        }
         
         //是否产生新的水管组
-        const pipes = this.dataStore.get('pipes');
         if (pipes[0].x <= (this.dataStore.canvas.width - pipes[0].width) / 2 && pipes.length == 2) {
             this.createPipes();
         }
@@ -50,7 +56,12 @@ export class Director {
         this.dataStore.get('pipes').forEach(function (values) {
             values.draw();
         });
+        
+        this.dataStore.get('land').draw();
+        
         let timer = requestAnimationFrame(() => this.run());
         this.dataStore.put('timer', timer);
+
+        
     }
 }
