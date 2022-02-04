@@ -1,6 +1,7 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
+import { Birds } from "./player/Birds";
 import { Land } from "./player/Land";
 import { Background } from "./runtime/Background";
 
@@ -51,7 +52,8 @@ export default class Main {
         console.log("Main.init(): 添加背景Sprite对象到DataStore");
         this.dataStore.put('background', Background)
                 .put('land', Land)
-                .put('pipes', []);  // 2个管道同时出现
+                .put('pipes', [])  // 2个管道同时出现
+                .put('birds', Birds);
 
         // 生成管道对
         this.director.createPipes();

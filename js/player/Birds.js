@@ -1,14 +1,52 @@
 //小鸟类
 
+import { DataStore } from "../base/DataStore";
 import { Sprite } from "../base/Sprite";
 
-export class Bird extends Sprite {
+export class Birds extends Sprite {
     constructor() {
-        const image = Sprite.getImage('bird');
+        const image = Sprite.getImage('birds');
         super(image, 
             0, 0,
             image.width, image.height,
             0, 0,
             image.width, image.height);
+
+            this.dataStore = DataStore.getInstance();
+
+            //存储小鸟状态
+            const birdWidth = 34;   //小鸟宽度
+            const birdHeight = 24;  //小鸟高度
+            //小鸟在屏幕上的位置
+            this.birdX = this.dataStore.canvas.width / 4;
+            this.birdY = this.dataStore.canvas.height / 2;
+
+            this.clippingX = [0, birdWidth , birdWidth * 2]   //3帧在图片中起始位置
+            this.clippingY = [0, 0, 0];
+            this.clippingWidth = [birdWidth, birdWidth, birdWidth];
+            this.clippingHeight = [birdHeight, birdHeight, birdHeight];
+            
+
+            //计数：显示哪一帧
+            this.count = 0;
+            //帧索引
+            this.index = 0
+    }
+
+    draw() {
+        //实现小鸟振翅动画
+        //定义帧间隔
+        const speed = 1;
+        this.count = this.count + speed;
+        //索引值在0-2之间循环
+        if (this.index == 2) {
+            this.count = 0;
+        }
+        this.index = this.count;
+        super.draw(this.img,
+            this.clippingX[this.index], this.clippingY[this.index],
+            this.clippingWidth[this.index], this.clippingHeight[this.index],
+            this.birdX, this.birdY,
+            this.birdWidth, this.birdHeight);
     }
 }

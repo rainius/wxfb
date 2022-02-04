@@ -61,6 +61,7 @@ export class Director {
             });
             
             this.dataStore.get('land').draw();
+            this.dataStore.get('birds').draw();
             
             // 定时器，产生动画绘制间隔
             const timer = requestAnimationFrame(() => this.run());
