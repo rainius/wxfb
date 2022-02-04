@@ -41,6 +41,12 @@ export class Director {
         this.dataStore.get('background').draw();
         this.dataStore.get('land').draw();
         
+        //是否产生新的水管组
+        const pipes = this.dataStore.get('pipes');
+        if (pipes[0].x <= (this.dataStore.canvas.width - pipes[0].width) / 2 && pipes.length == 2) {
+            this.createPipes();
+        }
+        
         this.dataStore.get('pipes').forEach(function (values) {
             values.draw();
         });
