@@ -36,17 +36,24 @@ export class Birds extends Sprite {
     draw() {
         //实现小鸟振翅动画
         //定义帧间隔
-        const speed = 1;
-        this.count = this.count + speed;
-        //索引值在0-2之间循环
-        if (this.index == 2) {
-            this.count = 0;
-        }
-        this.index = this.count;
+        const interval = 5;
+        
+        // this.index = this.count;
         super.draw(this.img,
             this.clippingX[this.index], this.clippingY[this.index],
             this.clippingWidth[this.index], this.clippingHeight[this.index],
             this.birdX, this.birdY,
-            this.birdWidth, this.birdHeight);
+            34,24);
+            //this.birdWidth, this.birdHeight);
+
+        this.count = this.count + 1;
+        if (this.count % interval == 0) {
+            this.index = this.index + 1;
+            //索引值在0-2之间循环
+            if (this.index > 2) {
+                this.count = 0;
+                this.index = 0;
+            }
+        }
     }
 }
