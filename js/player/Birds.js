@@ -33,10 +33,16 @@ export class Birds extends Sprite {
             this.count = 0;
             //帧索引
             this.index = 0
+            //重力方向计时
+            this.time = 0;
     }
 
     draw() {
 
+        //重力加速度
+        const g = 0.98 / 10;
+        const offSetY = (g * this.time * this.time) / 2;
+        this.time++;
         //实现小鸟振翅动画
         //定义动画帧切换间隔
         const interval = 5;
@@ -44,12 +50,12 @@ export class Birds extends Sprite {
         super.draw(this.img,
             this.clippingX[this.index], this.clippingY[this.index],
             this.clippingWidth[this.index], this.clippingHeight[this.index],
-            this.birdX, this.birdY,
+            this.birdX, this.birdY + offSetY,
             this.birdWidth, this.birdHeight);
 
         this.count = this.count + 1;
         if (this.count % interval == 0) {
-            this.index = this.index + 1;
+            this.index = this.index + 1; 
             //索引值在0-2之间循环
             if (this.index > 2) {
                 this.count = 0;
