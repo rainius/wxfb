@@ -3,6 +3,7 @@ import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
 import { Birds } from "./player/Birds";
 import { Land } from "./player/Land";
+import { StartBtn } from "./player/StartBtn";
 import { Background } from "./runtime/Background";
 
 const ctx = canvas.getContext('2d');
@@ -53,7 +54,8 @@ export default class Main {
         this.dataStore.put('background', Background)
                 .put('land', Land)
                 .put('pipes', [])  // 2个管道同时出现
-                .put('birds', Birds);
+                .put('birds', Birds)
+                .put('start_button', StartBtn);
 
         this.registerEvent();
 

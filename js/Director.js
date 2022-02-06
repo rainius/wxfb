@@ -123,6 +123,8 @@ export class Director {
             this.dataStore.put('timer', timer);
         } else {    // 游戏结束
             console.log("游戏结束");
+            // 游戏结束，显示开始按钮
+            this.dataStore.get('start_button').draw();
             //取消动画帧
             cancelAnimationFrame(this.dataStore.get('timer'));  
             //清除所有对象
