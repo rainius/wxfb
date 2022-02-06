@@ -50,7 +50,7 @@ export class Birds extends Sprite {
 
     draw() {
         //重力加速度
-        const g = 0.98 / 10;
+        const g = 0.98 / 5;
         const offSetY = (g * this.time * (this.time - 30)) / 2;
         this.birdY = this.y + offSetY;
         this.time++;

@@ -42,11 +42,50 @@ export class Director {
     //检测小鸟是否碰撞水管或地面
     check() {
         const birds = this.dataStore.get('birds');
+        //地面碰撞
         const land = this.dataStore.get('land');
         if (birds.birdY + birds.birdHeight >= land.y) {
             console.log("撞击地面");
             this.isGameOver = true;
         }
+        //碰撞水管
+        const pipes = this.dataStore.get('pipes');
+        //小鸟边框模型
+        const birdsBorder = {
+            top: birds.y,  
+            bottom: birds.birdY + birds.birdHeight,
+            left: birds.birdX,
+            right: birds.birdX + birds.birdWidth
+        };
+
+        //管道边框模型
+        const length = pipes.length;
+        for (let i = 0; i < length; i++) {
+            const pipe = pipes[i];
+            const pipeBorder = {
+                top: pipe.y,
+                bottom: pipe.y + pipe.height,
+                left: pipe.x,
+                right: pipe.x + pipe.width
+            }
+
+            if (Director.isCollisionDetected(birdsBorder, pipeBorder)) {
+                console.log("小鸟撞水管了");
+                this.isGameOver = true;
+            }
+        }
+    }
+
+    //碰撞检测函数
+    static isCollisionDetected(birdsBorder, pipeBorder) {
+        let s = true;
+        if (birdsBorder.top > pipeBorder.bottom ||
+            birdsBorder.bottom < pipeBorder.top ||
+            birdsBorder.left > pipeBorder.right ||
+            birdsBorder.right < pipeBorder.left) {
+            s = false;
+        }
+        return s;
     }
 
     // 游戏核心逻辑
