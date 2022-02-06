@@ -3,6 +3,7 @@
 import { DataStore } from "./base/DataStore";
 import { UpPipe } from "./player/UpPipe";
 import { DownPipe } from "./player/DownPipe";
+import { Score } from "./player/Score";
 
 export class Director {
     //导演只有一个，用单例实现
@@ -20,6 +21,10 @@ export class Director {
         this.moveSpeed = 2;
         // 游戏结束标记
         this.isGameOver = false;
+        // 进入计分区标记
+        this.inScoreArea = false;
+        // 离开计分区标记
+        this.outScoreArea = false;
     }
 
     //产生管道对
@@ -47,12 +52,13 @@ export class Director {
         if (birds.birdY + birds.birdHeight >= land.y) {
             console.log("撞击地面");
             this.isGameOver = true;
+            return;
         }
         //碰撞水管
         const pipes = this.dataStore.get('pipes');
         //小鸟边框模型
         const birdsBorder = {
-            top: birds.y,  
+            top: birds.birdY,  
             bottom: birds.birdY + birds.birdHeight,
             left: birds.birdX,
             right: birds.birdX + birds.birdWidth
@@ -68,10 +74,34 @@ export class Director {
                 left: pipe.x,
                 right: pipe.x + pipe.width
             }
-
             if (Director.isCollisionDetected(birdsBorder, pipeBorder)) {
                 console.log("小鸟撞水管了");
                 this.isGameOver = true;
+                return;
+            }  
+        }
+
+        //计分逻辑
+        for (let j = 0; j < length; j += 2) {
+            const pipeTop = pipes[j];
+            const pipeBottom = pipes[j + 1];
+            const scoreAreaBorder = {   //已经过碰撞检测，只考虑x方向边界
+                left: pipeTop.x,
+                right: pipeTop.x + pipeTop.width
+            }
+
+            const score = this.dataStore.get('score');
+            if (!Director.isInScoreArea(birdsBorder, scoreAreaBorder)) {
+                this.outScoreArea = true;
+                if (this.inScoreArea) {
+                    this.inScoreArea = false;
+                    score.increase();
+                    break;
+                }
+            } else {
+                this.inScoreArea = true;
+                this.outScoreArea = false;
+                break;
             }
         }
     }
@@ -86,6 +116,15 @@ export class Director {
             s = false;
         }
         return s;
+    }
+
+    static isInScoreArea(birdsBorder, scoreAreaBorder) {
+        if (birdsBorder.left > scoreAreaBorder.right ||
+            birdsBorder.right < scoreAreaBorder.left) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // 游戏核心逻辑
@@ -104,6 +143,7 @@ export class Director {
             if (pipes[0].x + pipes[0 ].width <= 0 && pipes.length == 4) {
                 pipes.shift();
                 pipes.shift();    
+                this.dataStore.get('score').canIncreate = true;
             }
             
             //是否产生新的水管组
@@ -117,12 +157,17 @@ export class Director {
             
             this.dataStore.get('land').draw();
             this.dataStore.get('birds').draw();
+            this.dataStore.get('score').draw();
 
             // 定时器，产生动画绘制间隔
             const timer = requestAnimationFrame(() => this.run());
             this.dataStore.put('timer', timer);
         } else {    // 游戏结束
             console.log("游戏结束");
+            // 分数清零
+            this.dataStore.get('score').clear();
+            this.inScoreArea = false;
+            this.outScoreArea = false;
             // 游戏结束，显示开始按钮
             this.dataStore.get('start_button').draw();
             //取消动画帧

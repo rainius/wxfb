@@ -3,6 +3,7 @@ import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
 import { Birds } from "./player/Birds";
 import { Land } from "./player/Land";
+import { Score } from "./player/Score";
 import { StartBtn } from "./player/StartBtn";
 import { Background } from "./runtime/Background";
 
@@ -55,7 +56,8 @@ export default class Main {
                 .put('land', Land)
                 .put('pipes', [])  // 2个管道同时出现
                 .put('birds', Birds)
-                .put('start_button', StartBtn);
+                .put('start_button', StartBtn)
+                .put('score', Score);
 
         this.registerEvent();
 
