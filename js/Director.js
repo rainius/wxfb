@@ -34,13 +34,29 @@ export class Director {
         pipes.push(new DownPipe(top));
     }
 
+    //定义触屏事件的响应函数
+    onTouch() { 
+        this.dataStore.get('birds').flyUp();
+    }
+
+    //检测小鸟是否碰撞水管或地面
+    check() {
+        const birds = this.dataStore.get('birds');
+        const land = this.dataStore.get('land');
+        if (birds.birdY + birds.birdHeight >= land.y) {
+            console.log("撞击地面");
+            this.isGameOver = true;
+        }
+    }
+
     // 游戏核心逻辑
     run() {
+        this.check();
         if (!this.isGameOver) {  //游戏结束标记
             // console.log("DataStore: ", this.dataStore);
             // console.log("Background: ", this.dataStore.get('background'));
             // 找到背景精灵对象并执行绘制
-            console.log("Director.run(): 执行核心逻辑");
+            //console.log("Director.run(): 执行核心逻辑");
             this.dataStore.get('background').draw();
             
             const pipes = this.dataStore.get('pipes');
@@ -62,7 +78,7 @@ export class Director {
             
             this.dataStore.get('land').draw();
             this.dataStore.get('birds').draw();
-            
+
             // 定时器，产生动画绘制间隔
             const timer = requestAnimationFrame(() => this.run());
             this.dataStore.put('timer', timer);

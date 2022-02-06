@@ -29,7 +29,7 @@ export class Sprite {
         x = this.x, y = this.y,
         width = this.width, height = this.height
     ) {
-        console.log("Sprite.draw(): 绘制精灵");
+        // console.log("Sprite.draw(): 绘制精灵");
         this.ctx.drawImage(img, srcX, srcY, srcW, srcH, x, y, width, height);
     }
 

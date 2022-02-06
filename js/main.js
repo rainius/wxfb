@@ -5,7 +5,7 @@ import { Birds } from "./player/Birds";
 import { Land } from "./player/Land";
 import { Background } from "./runtime/Background";
 
-const ctx = canvas.getContext('2d')
+const ctx = canvas.getContext('2d');
 
 /**
  * 游戏主函数
@@ -55,8 +55,27 @@ export default class Main {
                 .put('pipes', [])  // 2个管道同时出现
                 .put('birds', Birds);
 
+        this.registerEvent();
+
         // 生成管道对
         this.director.createPipes();
         this.director.run();
+    }
+
+    //注册点击事件
+    registerEvent() {
+        console.log("Register event");
+        canvas.addEventListener('touchstart', e => {
+            console.log("Touch on the screen");
+            //屏蔽事件冒泡
+            e.preventDefault();
+            if (this.director.isGameOver) {
+                // 当游戏出于结束状态，点击屏幕开始游戏
+                console.log("游戏开始");
+                this.init();
+            } else {   
+                this.director.onTouch();
+            }
+        });
     }
 }
