@@ -1,6 +1,7 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
+
 import { Birds } from "./player/Birds";
 import { Land } from "./player/Land";
 import { Score } from "./player/Score";
@@ -27,6 +28,10 @@ export default class Main {
   //   }
     //初始化资源加载类
         // new ResourceLoader();
+        const newHeight = canvas.width * (521 / 288);
+        if (canvas.height > newHeight) {
+            canvas.height = newHeight;
+        }
         //初始化数据存储类
         this.dataStore = DataStore.getInstance();
         //初始化导演
