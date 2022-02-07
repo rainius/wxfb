@@ -4,6 +4,7 @@ import { DataStore } from "./base/DataStore";
 import { UpPipe } from "./player/UpPipe";
 import { DownPipe } from "./player/DownPipe";
 import { Score } from "./player/Score";
+import Music from "./runtime/music";
 
 export class Director {
     //导演只有一个，用单例实现
@@ -25,6 +26,8 @@ export class Director {
         this.inScoreArea = false;
         // 离开计分区标记
         this.outScoreArea = false;
+        // 获取音乐对象
+        this.music = new Music();
     }
 
     //产生管道对
@@ -51,6 +54,7 @@ export class Director {
         const land = this.dataStore.get('land');
         if (birds.birdY + birds.birdHeight >= land.y) {
             console.log("撞击地面");
+            this.music.playHit();
             this.isGameOver = true;
             return;
         }
@@ -76,6 +80,7 @@ export class Director {
             }
             if (Director.isCollisionDetected(birdsBorder, pipeBorder)) {
                 console.log("小鸟撞水管了");
+                this.music.playHit();
                 this.isGameOver = true;
                 return;
             }  
@@ -96,6 +101,7 @@ export class Director {
                 if (this.inScoreArea) {
                     this.inScoreArea = false;
                     score.increase();
+                    this.music.playScore();
                     break;
                 }
             } else {

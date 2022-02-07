@@ -89,6 +89,7 @@ export default class Main {
                 console.log("游戏开始");
                 this.init();
             } else {   
+                this.music.playWing();
                 this.director.onTouch();
             }
         });

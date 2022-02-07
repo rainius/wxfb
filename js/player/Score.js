@@ -19,8 +19,9 @@ export class Score {
     }
 
     draw() {
-        this.ctx.font = '25px Arial';
-        this.ctx.fillstyle = "#d89c36";
-        this.ctx.fillText(this.scoreNumber, this.canvas.width / 2, this.canvas.height / 18, 1000);
+        this.ctx.fillstyle = "#ffffff";
+        this.ctx.font = '20px Arial';
+        // this.ctx.fillText(this.scoreNumber, this.canvas.width / 2, this.canvas.height / 18, 1000);
+        this.ctx.fillText(this.scoreNumber, 10, 30);
     }
 }

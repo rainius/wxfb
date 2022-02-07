@@ -3,27 +3,39 @@
 import { DataStore } from "../base/DataStore";
 import { Sprite } from "../base/Sprite";
 import { Director } from "../Director";
+import { canvas } from "../libs/weapp-adapter";
 
 export class Land extends Sprite {
     constructor() {
+        
+        const canvasWidth = DataStore.getInstance().canvas.width;
+        const canvasHeight = DataStore.getInstance().canvas.height;
         const image = Sprite.getImage('land');
         super(image, 
             0, 0, image.width, image.height,
-            0, DataStore.getInstance().canvas.height - image.height,
-            image.width, image.height);
+            0, canvasHeight - image.height,
+            canvasWidth, image.height);
 
-            this.landX = 0;
-            this.landSpeed = -Director.getInstance().moveSpeed;
+        this.left = canvasWidth;
+        this.landSpeed = -Director.getInstance().moveSpeed;
+
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
     }
 
     // 重写draw()以实现地面不停左移
     draw() {
-        this.landX = this.landX + this.landSpeed;
-        if (this.landX < DataStore.getInstance().canvas.width - this.img.width) {
-            this.landX = 0;
+        this.left += this.landSpeed;
+        if (this.left <= 0) {
+            this.left = this.canvasWidth;
         }
+
         super.draw(this.img, 
             this.srcX, this.srcY, this.srcW, this.srcH,
-            this.landX, this.y, this.width, this.height);
+            -this.canvasWidth + this.left, this.y, this.width, this.height);
+
+        super.draw(this.img, 
+            this.srcX, this.srcY, this.srcW, this.srcH,
+            this.left, this.y, this.width, this.height);
     }
 }
