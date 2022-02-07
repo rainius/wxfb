@@ -6,6 +6,7 @@ import { Land } from "./player/Land";
 import { Score } from "./player/Score";
 import { StartBtn } from "./player/StartBtn";
 import { Background } from "./runtime/Background";
+import Music from "./runtime/music";
 
 const ctx = canvas.getContext('2d');
 
@@ -35,6 +36,13 @@ export default class Main {
         loader.onload(map => this.onResourceFirstLoad(map));
     }
 
+    // createBackgroundMusic() {
+    //     const bgm = wx.createInnerAudioContext();
+    //     bgm.autoplay = true;
+    //     bgm.loop = true;
+    //     bgm.src = './audio/bgm.mp3'; 
+    // }
+
     onResourceFirstLoad(map) {
         //对DataStore进行测试
         //DataStore.getInstance();
@@ -60,6 +68,9 @@ export default class Main {
                 .put('score', Score);
 
         this.registerEvent();
+
+        //添加音乐对象
+        this.music = new Music();
 
         // 生成管道对
         this.director.createPipes();
