@@ -16,7 +16,7 @@ export class ResourceLoader {
         console.log(this.map);
     }
 
-    //注入回调函数
+    //通知资源加载完毕
     onload(callback) {
         // 计数
         let loadCount = 0;
@@ -32,5 +32,9 @@ export class ResourceLoader {
             }
         }
     }
-    
+
+    //工厂方法
+    static create() {
+        return new ResourceLoader();
+    }
 }
