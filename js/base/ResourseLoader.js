@@ -15,4 +15,22 @@ export class ResourceLoader {
         }
         console.log(this.map);
     }
+
+    //注入回调函数
+    onload(callback) {
+        // 计数
+        let loadCount = 0;
+        for (let value of this.map.values()) {      //获取所有的图片对象
+            //图片加载完毕通知函数
+            value.onload = () => {
+                //加载计数               
+                loadCount++;
+                if (loadCount >= this.map.size) {
+                    //资源已经全部加载，则调用外部注入的callback
+                    callback(this.map);
+                }
+            }
+        }
+    }
+    
 }
