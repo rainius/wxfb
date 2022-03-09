@@ -13,23 +13,6 @@ export default class Main {
         const loader = ResourceLoader.create();
         //注入回调函数，加载完毕时调用
         loader.onload(map => this.onResourceFirstLoad(map));
-
-        DataStore.getInstance();
-        DataStore.getInstance();
-        DataStore.getInstance();
-
-        // //加载图片
-        // let image = new Image();
-        // image.src = "images/background.png";
-        // // 图片加载完毕
-        // image.onload = () => {
-        //     //绘制背景图
-        //     ctx.drawImage(image,
-        //         0, 0, 
-        //         image.width, image.height,
-        //         0, 0,
-        //         image.width, image.height);
-        // };
     }
 
     onResourceFirstLoad(map) {
@@ -38,5 +21,6 @@ export default class Main {
         this.dataStore.ctx = ctx;   //存储上下文对象
         this.dataStore.canvas = canvas; //存储画布对象
         this.dataStore.res = map;   //存储图片资源map
+        console.log("DataStore: ", this.dataStore);
     }
 }
