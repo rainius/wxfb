@@ -7,13 +7,13 @@ export class ResourceLoader {
         this.map = new Map(Resources);
         //用实际的Image对象代替图片路径
         for (let [key, value] of this.map) {
-            console.log(key, value);
+            //console.log(key, value);
             const image = new Image();
             image.src = value;
             //用Image对象替换图片路径字符串
             this.map.set(key, image);
         }
-        console.log(this.map);
+        //console.log(this.map);
     }
 
     //通知资源加载完毕

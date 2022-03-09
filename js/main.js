@@ -7,7 +7,12 @@ const ctx = canvas.getContext('2d')
 export default class Main {
     // 构造方法：程序逻辑的入口
     constructor() {
-        new ResourceLoader();
+        // new ResourceLoader();
+        //使用工厂方法创建loader
+        const loader = ResourceLoader.create();
+        //注入回调函数，加载完毕时调用
+        loader.onload(map => this.onResourceFirstLoad(map));
+
         // //加载图片
         // let image = new Image();
         // image.src = "images/background.png";
@@ -21,4 +26,9 @@ export default class Main {
         //         image.width, image.height);
         // };
     }
+
+    onResourceFirstLoad(map) {
+        console.log("Main", map);
+    }
+
 }
