@@ -30,5 +30,4 @@ export default class Main {
     onResourceFirstLoad(map) {
         console.log("Main", map);
     }
-
 }
