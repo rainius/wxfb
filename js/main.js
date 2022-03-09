@@ -1,3 +1,4 @@
+import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 
 const ctx = canvas.getContext('2d')
@@ -12,6 +13,10 @@ export default class Main {
         const loader = ResourceLoader.create();
         //注入回调函数，加载完毕时调用
         loader.onload(map => this.onResourceFirstLoad(map));
+
+        DataStore.getInstance();
+        DataStore.getInstance();
+        DataStore.getInstance();
 
         // //加载图片
         // let image = new Image();
@@ -28,6 +33,10 @@ export default class Main {
     }
 
     onResourceFirstLoad(map) {
-        console.log("Main", map);
+        //console.log("Main", map);
+        this.dataStore = DataStore.getInstance();
+        this.dataStore.ctx = ctx;   //存储上下文对象
+        this.dataStore.canvas = canvas; //存储画布对象
+        this.dataStore.res = map;   //存储图片资源map
     }
 }
