@@ -1,5 +1,6 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
+import { Background } from "./runtime/Background";
 
 const ctx = canvas.getContext('2d')
 /**
@@ -22,5 +23,15 @@ export default class Main {
         this.dataStore.canvas = canvas; //存储画布对象
         this.dataStore.res = map;   //存储图片资源map
         console.log("DataStore: ", this.dataStore);
+        this.init();
+    }
+
+    init() {
+        //创建各精灵对象并装入DataStore
+        // 背景
+        this.dataStore.put("background", new Background);
+        // 验证：获取背景对象并绘制
+        const backgroundSprite = this.dataStore.get("background");
+        backgroundSprite.draw();
     }
 }
