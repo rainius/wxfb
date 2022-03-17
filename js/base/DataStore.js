@@ -1,5 +1,4 @@
 //全局数据存储类
-
 export class DataStore {
 
     //单例模式，保持取得的对象全局唯一

@@ -1,5 +1,6 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
+import { Director } from "./Director";
 import { Background } from "./runtime/Background";
 
 const ctx = canvas.getContext('2d')
@@ -9,6 +10,9 @@ const ctx = canvas.getContext('2d')
 export default class Main {
     // 构造方法：程序逻辑的入口
     constructor() {
+        //初始化导演
+        this.director = Director.getInstance();
+
         // new ResourceLoader();
         //使用工厂方法创建loader
         const loader = ResourceLoader.create();
@@ -30,8 +34,12 @@ export default class Main {
         //创建各精灵对象并装入DataStore
         // 背景
         this.dataStore.put("background", new Background);
-        // 验证：获取背景对象并绘制
-        const backgroundSprite = this.dataStore.get("background");
-        backgroundSprite.draw();
+        /* 交给导演来做：
+             //验证：获取背景对象并绘制
+                const backgroundSprite = this.dataStore.get("background");
+                backgroundSprite.draw();
+        */
+        // 导演启动游戏主逻辑
+        this.director.run();
     }
 }
