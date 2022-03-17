@@ -1,6 +1,5 @@
 import { DataStore } from "../base/DataStore";
 import { Sprite } from "../base/Sprite";
-
 // 背景类
 export class Background extends Sprite {
     constructor() {

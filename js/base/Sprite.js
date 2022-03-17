@@ -1,8 +1,6 @@
 // 精灵基类
 // 负责初始化精灵加载资源和大小以及位置
-
 import { DataStore } from "./DataStore";
-
 export class Sprite {
     // 构造方法，初始化持有的Image对象及绘制相关参数
     constructor(img = null,
