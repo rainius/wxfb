@@ -2,6 +2,7 @@ import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
 import { Background } from "./runtime/Background";
+import { Land } from "./runtime/Land";
 
 const ctx = canvas.getContext('2d')
 /**
@@ -32,8 +33,8 @@ export default class Main {
 
     init() {
         //创建各精灵对象并装入DataStore
-        // 背景
-        this.dataStore.put("background", new Background);
+        this.dataStore.put("background", new Background) // 背景
+                      .put("land", new Land); //地面
         /* 交给导演来做：
              //验证：获取背景对象并绘制
                 const backgroundSprite = this.dataStore.get("background");
