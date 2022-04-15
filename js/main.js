@@ -1,6 +1,7 @@
 import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
+import { Bird } from "./player/Birds";
 import { Background } from "./runtime/Background";
 import { Land } from "./runtime/Land";
 
@@ -32,9 +33,19 @@ export default class Main {
     }
 
     init() {
+        //将游戏结束标记设置为false，游戏可以开始
+        this.director.isGameOver = false;
         //创建各精灵对象并装入DataStore
         this.dataStore.put("background", new Background) // 背景
-                      .put("land", new Land); //地面
+                      .put("land", new Land) //地面
+                      .put("pipes", [])    //水管对应数组
+                      .put('birds', new Bird);  //填加小鸟实例到全局存储
+        //注册事件监听
+        this.registerEvent();
+        
+                      // 生成管道对
+        this.director.createPipes();
+        
         /* 交给导演来做：
              //验证：获取背景对象并绘制
                 const backgroundSprite = this.dataStore.get("background");
@@ -42,5 +53,17 @@ export default class Main {
         */
         // 导演启动游戏主逻辑
         this.director.run();
+    }
+
+    //注册点击事件
+    registerEvent() {
+        console.log("Register event");
+        canvas.addEventListener('touchstart', e => {
+            console.log("Touch on the screen");
+            //屏蔽事件冒泡
+            e.preventDefault();
+            //通知导演发生触屏事件
+            this.director.onTouch();
+        });
     }
 }
