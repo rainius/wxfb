@@ -1,4 +1,5 @@
 import { DataStore } from "./base/DataStore";
+import Music from "./base/Music";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
 import { Bird } from "./player/Birds";
@@ -46,8 +47,9 @@ export default class Main {
                       .put('start_button', StartBtn); //填加开始按钮实例到全局存储
         //注册事件监听
         this.registerEvent();
-        
-                      // 生成管道对
+        //添加音乐对象
+        this.music = Music.getInstance();
+        // 生成管道对
         this.director.createPipes();
         
         /* 交给导演来做：

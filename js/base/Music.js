@@ -20,7 +20,7 @@ export default class Music {
         this.wingAudio = new Audio()
         this.wingAudio.src = 'audio/wing.wav'
         // 得分音效
-        tthis.scoreAudio = new Audio()
+        this.scoreAudio = new Audio()
         this.scoreAudio.src = 'audio/point.wav'
         // 撞击音效
         this.hitAudio = new Audio()
