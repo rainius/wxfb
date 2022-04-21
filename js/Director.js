@@ -20,6 +20,10 @@ export class Director {
         this.moveSpeed = 2; 
         // 游戏结束标记
         this.isGameOver = false;
+        // 进入计分区标记
+        this.inScoreArea = false;
+        // 离开计分区标记
+        this.outScoreArea = true;
     }
 
      //产生管道对
@@ -45,9 +49,83 @@ export class Director {
         const birds = this.dataStore.get('birds');
         const land = this.dataStore.get('land');
         console.log("检测 撞击地面： ", birds.birdY, birds.birdHeight,land.y);
+        //检测与地面的碰撞
         if (birds.birdY + birds.birdHeight >= land.y) {
             console.log("撞击地面");
             this.isGameOver = true;
+        }
+        //检测与水管的碰撞
+        //小鸟边框模型
+        const birdsBorder = {
+            top: birds.y,  
+            bottom: birds.birdY + birds.birdHeight,
+            left: birds.birdX,
+            right: birds.birdX + birds.birdWidth
+        };
+        //遍历每个管道
+        const pipes = this.dataStore.get('pipes');
+        const length = pipes.length;
+        for (let i = 0; i < length; i++) {
+            const pipe = pipes[i];
+            //管道边界
+            const pipeBorder = {
+                top: pipe.y,
+                bottom: pipe.y + pipe.height,
+                left: pipe.x,
+                right: pipe.x + pipe.width
+            }    
+            //检查当前水管与小鸟是否碰撞
+            if (Director.isCollisionDetected(birdsBorder, pipeBorder)) {
+                console.log("小鸟撞水管了");
+                this.isGameOver = true;
+                break;
+            }
+        }
+
+        //计分逻辑
+        for (let j = 0; j < length; j += 2) {
+            const pipeTop = pipes[j];
+            //得分区边界：已经过碰撞检测，只考虑x方向边界
+            const scoreAreaBorder = {   
+                left: pipeTop.x,
+                right: pipeTop.x + pipeTop.width
+            }
+            const score = this.dataStore.get('score');  //取计分对象
+             if (!Director.isInScoreArea(birdsBorder, scoreAreaBorder)) {//不在得分区
+                 this.outScoreArea = true;  
+                 if (this.inScoreArea) { 
+                     //如果前一状态仍然表示停留在得分区，则表明：
+                     //小鸟刚刚安全通过得分区，应当加分
+                     this.inScoreArea = false;
+                     score.increase();
+                     break;
+                 }
+             } else {   // 当前进入得分区
+                 this.inScoreArea = true;
+                 this.outScoreArea = false;
+                 break;
+             }
+        }
+    }
+
+    //碰撞检测函数
+    static isCollisionDetected(birdsBorder, pipeBorder) {
+        let s = true;
+        if (birdsBorder.top > pipeBorder.bottom ||
+            birdsBorder.bottom < pipeBorder.top ||
+            birdsBorder.left > pipeBorder.right ||
+            birdsBorder.right < pipeBorder.left) {
+            s = false;
+        }
+        return s;
+    }
+    //小鸟是否进入得分区
+    static isInScoreArea(birdsBorder, scoreAreaBorder) {
+        if (birdsBorder.left > scoreAreaBorder.right ||
+            birdsBorder.right < scoreAreaBorder.left) {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -83,11 +161,16 @@ export class Director {
             //实现动画：循环重绘场景
             let timer = requestAnimationFrame(() => this.run());
             this.dataStore.put('timer', timer); // 保存以便将来停止动画
-
-
             this.dataStore.get('birds').draw();
+            this.dataStore.get('score').draw(); // 绘制得分
         } else {    // 游戏结束
             console.log("游戏结束");
+            // 分数清零
+            this.dataStore.get('score').clear();
+            this.inScoreArea = false;
+            this.outScoreArea = false;
+            // 游戏结束，显示开始按钮
+            this.dataStore.get('start_button').draw();
             //取消动画帧
             cancelAnimationFrame(this.dataStore.get('timer'));
             //清除所有对象

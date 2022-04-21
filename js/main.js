@@ -2,6 +2,8 @@ import { DataStore } from "./base/DataStore";
 import { ResourceLoader } from "./base/ResourseLoader"
 import { Director } from "./Director";
 import { Bird } from "./player/Birds";
+import { Score } from "./player/Score";
+import { StartBtn } from "./player/StartBtn";
 import { Background } from "./runtime/Background";
 import { Land } from "./runtime/Land";
 
@@ -39,7 +41,9 @@ export default class Main {
         this.dataStore.put("background", new Background) // 背景
                       .put("land", new Land) //地面
                       .put("pipes", [])    //水管对应数组
-                      .put('birds', new Bird);  //填加小鸟实例到全局存储
+                      .put('birds', new Bird)   //填加小鸟实例到全局存储
+                      .put('score', Score)//计分器实例
+                      .put('start_button', StartBtn); //填加开始按钮实例到全局存储
         //注册事件监听
         this.registerEvent();
         
@@ -62,8 +66,14 @@ export default class Main {
             console.log("Touch on the screen");
             //屏蔽事件冒泡
             e.preventDefault();
-            //通知导演发生触屏事件
-            this.director.onTouch();
+            if (this.director.isGameOver) {
+                // 当游戏出于结束状态，点击屏幕开始游戏
+                console.log("游戏开始");
+                this.init();
+            } else {
+                //通知导演发生触屏事件
+                this.director.onTouch();
+            }
         });
     }
 }
